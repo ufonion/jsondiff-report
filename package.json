@@ -2,6 +2,8 @@
   "name": "@ufonion/jsondiff-report",
   "version": "0.0.2",
   "description": "Generate report of jsondiff result for 2 directories",
+  "homepage": "https://github.com/ufonion/jsondiff-report",
+  "repository": "git@github.com:ufonion/jsondiff-report.git",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {

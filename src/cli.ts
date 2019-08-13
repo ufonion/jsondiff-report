@@ -17,9 +17,11 @@ interface JsonDiffResult extends FileListDiff {
 
 // tslint:disable-next-line: no-floating-promises
 main(minimist(process.argv.slice(2), {
+  boolean: ['file'],
   alias: {
     help: ['h'],
     output: ['o'],
+    file: ['f']
   }
 }));
 
@@ -29,16 +31,32 @@ async function main(argv: minimist.ParsedArgs): Promise<void> {
     process.exit(0);
   }
 
-  // tslint:disable-next-line: no-commented-code
-  // tslint:disable: no-unsafe-any
-  // const argIn: string = argv._[0] || argv.input;
-  // const argOut: string = argv._[1] || argv.output;
+  const output: string | undefined = argv.output;
+
+  if (argv.file) {
+    const left: string = argv._[0];
+    const right: string = argv._[1];
+    const result = {
+      baseDir: { left, right, },
+      jsonFileDiff: {},
+    };
+
+    try {
+      const leftJson = JSON.parse((await readFile(left)).toString());
+      const rightJson = JSON.parse((await readFile(right)).toString());
+      const diffString: string = jsonDiff.diff(leftJson, rightJson);
+      (result.jsonFileDiff as any)[left] = diffString;
+    } catch (error) {
+      (result.jsonFileDiff as any)[left] = (error as Error).message;
+    }
+    await writeOutput(JSON.stringify(result, undefined, 2), output);
+    return;
+  }
 
   try {
     const left = await generateFileList(argv._[0]);
     const right = await generateFileList(argv._[1]);
     const fileDiff = generateFileListDiff(left, right);
-    const output: string | undefined = argv.output;
 
     const result: JsonDiffResult = {
       ...fileDiff,
@@ -52,8 +70,6 @@ async function main(argv: minimist.ParsedArgs): Promise<void> {
         const diffString: string = jsonDiff.diff(leftJson, rightJson);
         result.jsonFileDiff[file] = diffString;
       } catch (error) {
-        // tslint:disable-next-line: no-console
-        console.warn(whiteBright.bgRedBright('warn'), error);
         result.jsonFileDiff[file] = (error as Error).message;
       }
     }
@@ -84,10 +100,30 @@ function printHelp(): void {
 
   process.stdout.write(
     `
-    ${pkg.name} ${pkg.version}
-    Usage: jsondiff-report [--output, -o] [OUT_FILE] dir1 dir2
+${pkg.name} ${pkg.version}
+Usage:
+  jsondiff-report [--output, -o] [OUT_FILE] dir1 dir2
+  jsondiff-report [--file, -f] [--output, -o] [OUT_FILE] file1 file2
+  jsondiff-report [--help, -h]
+Generate a JSON-diff report for 2 directories/files.
 
-    Generate a JSON-diff report for 2 directories.
-    `
-  );
+positional arguments:
+  dir1/file1
+  dir2/file2
+
+optional arguments:
+  -h, --help    show this help message and exit
+  -f, --file    compare 2 files
+  -o, --output  the report output file, if this option is absent,
+                the programe will use the standard output
+
+Output Format:
+| Property       | Description                                                           |
+| -------------- | --------------------------------------------------------------------- |
+| baseDir        | The base dir: left for dir1 / file1, right for dir2 / file2.          |
+| leftOnly       | List of files that only exists in baseDir.left.                       |
+| rightOnly      | List of files that only exists in baseDir.right.                      |
+| all            | List of files that exists in both baseDir.left and baseDir.right.     |
+| jsonFileDiff   | The json-diff result for every file                                   |
+`);
 }

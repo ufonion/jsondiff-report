@@ -1,12 +1,9 @@
 
 import { generateFileList, generateFileListDiff } from '../src/fileList';
 import { FileList, FileListDiff } from '../src/definitions';
-import { createLogger } from '../src/common/logger';
 import * as _ from 'lodash';
 import { expect } from 'chai';
 import * as path from 'path';
-
-const logger = createLogger('test-fileList');
 
 const dirA = 'test/fixtures/a';
 const dirB = 'test/../test/fixtures/b/';
@@ -64,7 +61,6 @@ describe('fileList', () => {
   it('generateFileList', async () => {
     const listA = await generateFileList(dirA);
     const listB = await generateFileList(dirB);
-    logger.debug({ listA, listB, realListA, realListB });
     expect(_.isEqual(listA, realListA), 'File List for A check').to.be.true;
     expect(_.isEqual(listB, realListB), 'File List for B check').to.be.true;
   });
@@ -73,7 +69,6 @@ describe('fileList', () => {
     const listA = await generateFileList(dirA);
     const listB = await generateFileList(dirB);
     const diff = generateFileListDiff(listA, listB);
-    logger.debug({ listA, listB, diff, diffAB });
     expect(_.isEqual(diff, diffAB), 'File List Diff check').to.be.true;
   });
 });

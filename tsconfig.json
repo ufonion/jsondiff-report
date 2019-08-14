@@ -21,7 +21,8 @@
     "theme": "default",
     "exclude": [ 
       "test/**/*.ts",
-      "src/cli.ts"
+      "src/cli.ts",
+      "src/**/index.ts"
     ]
   },
   "include": [

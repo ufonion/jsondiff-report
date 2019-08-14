@@ -1,6 +1,6 @@
 {
   "name": "@globefish/json-diff",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Generate report of json-diff result for 2 directories/files",
   "homepage": "https://github.com/ufonion/jsondiff-report",
   "repository": "git@github.com:ufonion/jsondiff-report.git",
@@ -14,8 +14,8 @@
   "scripts": {
     "format": "tsfmt -r",
     "clean": "rm -rf dist build",
-    "compile": "yarn clean && yarn format && tsc",
-    "build": "yarn compile && yarn lint && yarn test && yarn _copylib && yarn doc",
+    "compile": "yarn clean && yarn format && tsc && yarn lint",
+    "build": "yarn compile && yarn test && yarn _copylib && yarn doc",
     "test": "scripty",
     "lint": "scripty",
     "_copylib": "mkdir -p dist && cp -R build/src/* dist/",

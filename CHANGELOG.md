@@ -1,5 +1,10 @@
 # Change log
 
+## 0.0.5 (2019-08-14)
+
+* Changed
+  * `@ufonion` -> `@globefish`
+
 ## 0.0.4 (2019-08-13)
 
 * Changed

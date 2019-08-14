@@ -21,7 +21,7 @@
     "_copylib": "mkdir -p dist && cp -R build/src/* dist/",
     "npm_publish": "scripty",
     "prepare": "yarn build",
-    "doc": "typedoc"
+    "doc": "typedoc && touch docs/.nojekyll"
   },
   "devDependencies": {
     "@types/bunyan": "^1.8.5",

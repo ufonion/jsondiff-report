@@ -1,5 +1,5 @@
 {
-  "name": "@ufonion/jsondiff-report",
+  "name": "@globefish/json-diff",
   "version": "0.0.4",
   "description": "Generate report of json-diff result for 2 directories/files",
   "homepage": "https://github.com/ufonion/jsondiff-report",

@@ -5,7 +5,7 @@ A utility to diff JSON files in 2 directories.
 ## Usage
 
 ```bash
-@ufonion/jsondiff-report 0.0.3
+@globefish/jsondiff-report 0.0.5
 Usage:
   jsondiff-report [--output, -o] [OUT_FILE] dir1 dir2
   jsondiff-report [--file, -f] [--output, -o] [OUT_FILE] file1 file2

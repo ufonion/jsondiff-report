@@ -1,5 +1,7 @@
 #!/bin/bash
 
+yarn compile
+
 mocha \
   --exit --trace-warnings \
   -r source-map-support/register \

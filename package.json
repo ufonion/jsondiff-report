@@ -52,7 +52,7 @@
     "cli-color": "1.4.0",
     "json-diff": "0.5.4",
     "lodash": "^4.17.11",
-    "minimist": "1.2.0",
+    "minimist": "1.2.5",
     "mrm-core": "3.3.2",
     "mz": "2.7.0",
     "stdin": "0.0.1"
